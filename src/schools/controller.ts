@@ -1,15 +1,19 @@
-import { Controller, Delete, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { SchoolService } from './service';
+import { CreateSchoolRequest } from './dto/createSchoolRequest';
 
 @Controller()
 export class SchoolController {
+    constructor(private schoolService: SchoolService) {}
+
     @ApiTags('학교 관리자')
     @ApiOperation({
         summary: '학교 페이지 생성',
     })
     @Post('/schools')
-    createSchool(): string {
-        return '';
+    createSchool(@Body() body: CreateSchoolRequest) {
+        return this.schoolService.create(body);
     }
 
     @ApiTags('학교 관리자')
